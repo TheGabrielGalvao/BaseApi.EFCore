@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/BaseApi.EFCore/.config/dotnet-tools.json
+/BaseApi.EFCore/appsettings.Development.json
+/BaseApi.EFCore/appsettings.json
+/BaseApi.EFCore/appsettings.Production.json
+/BaseApi.EFCore/Properties/launchSettings.json

@@ -2,33 +2,30 @@
 using Domain.Entities.Auth;
 using Domain.Interface.Repository.Auth;
 using Domain.Interface.Repository.Common;
-using Domain.Interface.Service;
+using Domain.Interface.Service.Auth;
 using Domain.Model.Auth;
+using Util;
 
 namespace Service.Auth
 {
     public class UserService : IUserService
     {
         public readonly IUserRepository _repository;
-        public readonly IUserProfileRepository _profileRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uow;
-        public UserService(IUserRepository repository, IMapper mapper, IUnitOfWork uow, IUserProfileRepository profileRepository)
+        public UserService(IUserRepository repository, IMapper mapper, IUnitOfWork uow)
         {
             _repository = repository;
             _mapper = mapper;
             _uow = uow;
-            _profileRepository = profileRepository;
         }
         public async Task<UserResponse> Create(UserRequest request)
         {
             try
             {
-                var profile = await _profileRepository.Get(request.ProfileUuid.Value);
                 var user = _mapper.Map<User>(request);
-                
-                user.ProfileId = profile.Id;
-                user.Profile = profile;
+                user.Password = Encryption.HashPassword(request.Password);
+
                 await _repository.Create(user);
 
                 _uow.Commit();
@@ -70,12 +67,10 @@ namespace Service.Auth
             try
             {
                 var user = await _repository.Get(uuid);
-                var profile = await _profileRepository.Get(request.ProfileUuid.Value);
-
+                
                 user.Name = request.Name;
                 user.Email = request.Email;
-                user.Password = request.Password;
-                user.Profile = profile;
+                user.Password = Encryption.HashPassword(request.Password);
                 user.Status = request.Status;
                 
                 await _repository.Update(user);

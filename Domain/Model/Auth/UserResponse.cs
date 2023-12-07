@@ -9,6 +9,5 @@ namespace Domain.Model.Auth
         public string Email { get; set; }
         public string Password { get; set; }
         public ERegisterStatus Status { get; set; }
-        public Guid? ProfileUuid { get; set; }
     }
 }

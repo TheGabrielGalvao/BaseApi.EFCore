@@ -10,17 +10,7 @@ namespace Domain.Entities.Auth
         public string Email { get; set; }
         public string? Password { get; set; }
         public ERegisterStatus? Status { get; set; } = ERegisterStatus.ACTIVE;
-
-        public long ProfileId { get; set; }
-
-        [ForeignKey(nameof(ProfileId))]
-        public UserProfile Profile { get; set; }
-
-        public long? UserGroupId { get; set; }
-
-        [ForeignKey(nameof(UserGroupId))]
-        [InverseProperty("Users")]
-        public UserGroup UserGroup { get; set; }
+        
     }
 
 }

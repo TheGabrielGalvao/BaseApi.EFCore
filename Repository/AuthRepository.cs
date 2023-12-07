@@ -1,5 +1,5 @@
 ﻿using Domain.Entities.Auth;
-using Domain.Interface.Repository;
+using Domain.Interface.Repository.Auth;
 using Domain.Model.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -70,7 +70,6 @@ namespace Repository
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.Role, user.Profile.Name),
                 }),
                 Expires = DateTime.UtcNow.AddHours(8),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

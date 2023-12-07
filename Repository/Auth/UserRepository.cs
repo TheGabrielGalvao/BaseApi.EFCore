@@ -35,13 +35,13 @@ namespace Repository.Auth
 
         public async Task<User> Get(Guid uuid)
         {
-            var user = await _context.Users.Include(x => x.Profile).FirstOrDefaultAsync(c => c.Uuid == uuid);
+            var user = await _context.Users.FirstOrDefaultAsync(c => c.Uuid == uuid);
             return user;
         }
 
         public async Task<User> Get(AuthRequest request)
         {
-            return await _context.Users.Include(x => x.Profile).FirstOrDefaultAsync(x => string.Equals(x.Name, request.Name)
+            return await _context.Users.FirstOrDefaultAsync(x => string.Equals(x.Name, request.Name)
             && x.Password == request.Password);
         }
 
